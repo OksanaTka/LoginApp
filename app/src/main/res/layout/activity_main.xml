@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/main_LBL_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_centerHorizontal="true"
+        android:textSize="50dp"/>
+
+    <EditText
+        android:id="@+id/main_EDT_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_LBL_login"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:inputType="textPassword"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/main_BTN_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/main_EDT_password"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/purple_500"
+        android:textColor="@color/purple_500"
+        android:text="login"/>
+
+
+
+
+
+</RelativeLayout>
