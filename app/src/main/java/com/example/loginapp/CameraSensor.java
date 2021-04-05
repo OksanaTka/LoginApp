@@ -8,7 +8,7 @@ public class CameraSensor {
     private boolean flash = false;
     private Context context;
 
-    public CameraSensor() { }
+    public CameraSensor() {}
 
     public CameraSensor(Context context) {
         this.context = context;
@@ -18,6 +18,9 @@ public class CameraSensor {
         return flash;
     }
 
+    /**
+     *Turn off the flash
+     */
     public void turnOffFlash(){
         CameraManager camManager = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -35,6 +38,9 @@ public class CameraSensor {
         }
     }
 
+    /**
+     * Check if flash is on
+     */
     public void checkFlash() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             CameraManager camManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);

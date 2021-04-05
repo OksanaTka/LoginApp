@@ -9,8 +9,7 @@ public class LightSensor {
     private boolean brightness = false;
     private Context context;
 
-    public LightSensor() {
-    }
+    public LightSensor() { }
 
     public LightSensor(Context context) {
         this.context = context;
@@ -20,6 +19,9 @@ public class LightSensor {
         return brightness;
     }
 
+    /**
+     * Get the screen brightness
+     */
     public void checkScreenBrightness() {
         try {
             int currentBrightness = Settings.System.getInt(
@@ -33,6 +35,11 @@ public class LightSensor {
         }
     }
 
+    /**
+     * Get the maximum brightness level of the device
+     * @param defaultValue
+     * @return (int) max level of device
+     */
     public int getMaxBrightness(int defaultValue) {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         if (powerManager != null) {

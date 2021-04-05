@@ -1,21 +1,21 @@
 package com.example.loginapp;
 
 import android.media.MediaRecorder;
-
 import java.io.IOException;
 
 public class AudioSensors {
     private double soundAmplitude =0;
     private MediaRecorder mRecorder = null;
 
-    public AudioSensors() {
-
-    }
+    public AudioSensors() { }
 
     public double getSoundAmplitude() {
         return soundAmplitude;
     }
 
+    /**
+     * Start recording audio
+     */
     public void start() {
         if (mRecorder == null) {
             mRecorder = new MediaRecorder();
@@ -32,6 +32,9 @@ public class AudioSensors {
         }
     }
 
+    /**
+     * Stop recording audio
+     */
     public void stop() {
         if (mRecorder != null) {
             mRecorder.stop();
@@ -40,6 +43,9 @@ public class AudioSensors {
         }
     }
 
+    /**
+     * Get the amplitude
+     */
     public void getAmplitude() {
         if (mRecorder != null)
             soundAmplitude =  mRecorder.getMaxAmplitude();

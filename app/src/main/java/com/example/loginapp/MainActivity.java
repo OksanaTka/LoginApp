@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
@@ -18,19 +17,17 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
-import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends AppCompatActivity {
 
+    //The password that we entered
     private static final String PASSWORD = "123456";
 
     private MaterialButton main_BTN_login;
@@ -47,14 +44,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        motionSensors = new MotionSensors(this);
-        cameraSensor = new CameraSensor(this);
-        audioSensors = new AudioSensors();
-        lightSensor = new LightSensor(this);
-        instructions();
-        getCameraPermission();
-        getSoundPermission();
+        init();
+        initViews();
+    }
 
+    private void initViews(){
         main_BTN_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,10 +57,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void init() {
+        motionSensors = new MotionSensors(this);
+        cameraSensor = new CameraSensor(this);
+        audioSensors = new AudioSensors();
+        lightSensor = new LightSensor(this);
+        instructions();
+        getCameraPermission();
+        getSoundPermission();
+    }
+
     private void instructions() {
-        String message  = "TO LOGIN:\n1. Turn flash on \n2.Turn brightness " +
-                "level to the highest \n3.Add battery percent at the end of password \n" +
-                "4.Make a lot of Noise! \n5.Tilt your phone to landscape mode";
+        String message  = "TO LOGIN:\n1. Turn flash on \n2.Turn brightness." +
+                "level to the highest.\n3.Add battery percent at the end of password.\n" +
+                "4.Make a lot of Noise!\n5.Tilt your phone to landscape mode.\n6.Bring your hand close to the screen.";
         AlertDialog alertDialog =
                 new AlertDialog.Builder(MainActivity.this)
                         .setMessage(message)
@@ -112,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Check if the input passward is correct, and has the battery percentage at the end
+     */
     private void checkPassword() {
         String inputPassword = main_EDT_password.getText().toString();
         Pattern pattern = Pattern.compile(""+PASSWORD + getBatteryPercentage(this));
@@ -120,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
         password = matcher.find();
     }
 
+    /**
+     * Gets the devices battery percentage
+     * @param context
+     * @return (int)device's battery percentage
+     */
     public static int getBatteryPercentage(Context context) {
         if (Build.VERSION.SDK_INT >= 21) {
             BatteryManager bm = (BatteryManager) context.getSystemService(BATTERY_SERVICE);
@@ -134,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //-------------------Audio Recorder Permission -----------------------
+    //-------------------------------Audio Recorder Permission -------------------------------------
     private void getSoundPermission() {
         requestPermissionLauncherSound.launch(Manifest.permission.RECORD_AUDIO);
     }
@@ -155,7 +167,8 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(uri);
         AlertDialog alertDialog =
                 new AlertDialog.Builder(this)
-                        .setMessage("You are directed to the permissions page of the app. Please enable the permission of recording audio so we could check the microphone for sound check. Thank you!")
+                        .setMessage("You are directed to the permissions page of the app. Please enable " +
+                                "the permission of recording audio so we could check the microphone for sound check. Thank you!")
                         .setPositiveButton(Resources.getSystem().getString(android.R.string.ok),
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -178,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-    //----------------------Camera Permission ----------------------
+    //-------------------------------------Camera Permission ---------------------------------------
     private void getCameraPermission() {
         requestPermissionLauncherCamera.launch(Manifest.permission.CAMERA);
     }
@@ -193,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
     private void getCameraPermissionManually() {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -201,7 +213,8 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(uri);
         AlertDialog alertDialog =
                 new AlertDialog.Builder(this)
-                        .setMessage("You are directed to the permissions page of the app. Please enable the permission of the camera so we could access the flash for login check. Thank you!")
+                        .setMessage("You are directed to the permissions page of the app. Please enable" +
+                                " the permission of the camera so we could access the flash for login check. Thank you!")
                         .setPositiveButton(Resources.getSystem().getString(android.R.string.ok),
                                 new DialogInterface.OnClickListener() {
                                     @Override

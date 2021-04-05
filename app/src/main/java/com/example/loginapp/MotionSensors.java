@@ -18,6 +18,9 @@ public class MotionSensors {
         this.context = context;
     }
 
+    /**
+     * Check if the device is in landscape mode
+     */
     public void accelerometerSensor() {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -39,6 +42,9 @@ public class MotionSensors {
         }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
+    /**
+     * Check if the user's hand is close to device
+     */
     public void proximitySensor() {
         SensorManager mySensorManager;
         Sensor myProximitySensor;
@@ -57,9 +63,8 @@ public class MotionSensors {
                 if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
                     if (event.values[0] == 0) {
                         proximity = true;
-                        Log.d("proximitySensor", "Near");
                     } else {
-                        Log.d("proximitySensor", "Away");
+                        proximity = false;
                     }
                 }
             }
